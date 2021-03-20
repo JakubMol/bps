@@ -1,0 +1,60 @@
+Copyright and Disclaimer Notice
+
+Use of this ZIP file is subject to a licence agreement, the full terms of which are contained in this package. By opening and using the ZIP file, you indicate your agreement to the terms of the licence. In the event that you do not agree with any of the terms of the licence agreement, you must refrain from using the ZIP and erase all copies of the data under your control.
+
+The licence granted under the licence agreement is a non-exclusive, non-transferable licence to use, reproduce and adapt the Data, develop Derivative Products from the Data and distribute the Data and Derivative Products to End-users.  Geoscience Australia gives no warranty regarding the Data's accuracy, completeness, currency or suitability for any particular purpose.  Geoscience Australia's liability for breach of any statutory warranty is limited to replacement of the data. Geoscience Australia disclaims all other liability for all loss, damages, expense and costs incurred by any person as a result of relying on the information and data in the ZIP file.
+
+(c) Commonwealth of Australia (Geoscience Australia) 2008
+
+
+LICENCE AGREEMENT
+
+THIS DOCUMENT IS A LEGAL AGREEMENT BETWEEN THE COMMONWEALTH OF AUSTRALIA REPRESENTED BY GEOSCIENCE AUSTRALIA ('Geoscience Australia') AND YOU OR THE ORGANISATION ON WHOSE BEHALF YOU ARE UNDERTAKING THE LICENCE ('Licensee') IN RELATION TO THE DATA ON THE ZIP FILE ENCLOSED IN THIS PACKAGE ('Data'). BY OPENING THE PACKAGE AND USING THE ZIP FILE, YOU ACCEPT THE FOLLOWING CONDITIONS. IF YOU DO NOT AGREE WITH ANY OF THE TERMS OF THE LICENCE AGREEMENT, YOU MUST REFRAIN FROM USING THE DATA AND RETURN THE ZIP FILE TO THE PLACE OF PURCHASE WITHIN 7 DAYS OF SUPPLY OF THE DATA.
+
+CONDITIONS
+
+1.	Definitions: In these Conditions, unless the contrary intention appears:
+'Derivative Product' means a distinct product in which the Data are altered, abridged or supplemented, and/or which incorporates additional functionality;
+'End-user' means a third party to whom the Licensee supplies the Data or a Derivative Product; and
+'Intellectual Property' includes all copyright, and all rights in relation to registered and unregistered trademarks (including service marks), registered designs and confidential information (including trade secrets and know-how), and all other rights resulting from intellectual activity in the industrial, scientific, literary or artistic fields.
+
+2.	Grant of Licence: Geoscience Australia grants to the Licensee a non-exclusive, non-transferable licence ('Licence'):
+(a)	to use, reproduce and adapt the Data;
+(b)	to develop the Derivative Product from the Data; and
+(c)	to distribute the Data or the Derivative Product to End-users.
+The Licence does not entitle the Licensee to sub-licence the above rights. However the End-user may exercise limited rights conferred by Geoscience Australia, as described in the copyright statements that the Licensee is to apply under conditions 3 and 4.
+
+3.	Where the Data are used in unaltered form, the Licensee must make End-users aware that the Data are used under licence from Geoscience Australia by using the following copyright statement:
+(c) Commonwealth of Australia (Geoscience Australia) 2003
+Limited End-user licence provided by Geoscience Australia: Provided that you retain this notice, you may use and reproduce the data, for your personal use or use within your organisation. You must not create a Derivative Product in which the Data are altered, abridged or supplemented. Geoscience Australia gives no warranty regarding the Data's accuracy, completeness, currency or suitability for any particular purpose. Contact Geoscience Australia Sales Centre on 02 62499519 to obtain a wider licence.
+
+4.	Where a Derivative Product is developed from the Data, the Licensee must supply a copy of the Derivative Product and distribution information to Geoscience Australia on request. Any Derivative Product shall display the following copyright statement:
+This product incorporates data that are (c) Commonwealth of Australia (Geoscience Australia) 2003. The Data have been used in the product with the permission of Geoscience Australia. Geoscience Australia gives no warranty regarding their accuracy, completeness, currency or suitability for any particular purpose.
+Limited End-user licence provided by Geoscience Australia: Provided that you retain this notice, you may use and reproduce the Data incorporated in the product, for your personal use or use within your organisation. Contact Geoscience Australia Sales Centre on 
+02 62499519 to obtain a wider licence.
+
+5.	Payment: The Licensee is not entitled to use the Data until the correct fee for the Data has been paid.
+
+6.	Retention of notices: Except as permitted above, the Licensee must not remove, obscure or interfere with any copyright, acknowledgment, attribution, trade mark, warning or disclaimer statement affixed to, incorporated in or otherwise applied in connection with the Data.
+
+7.	Intellectual Property: Intellectual property in the Data is owned by Geoscience Australia. 
+
+8.	Warranties: To the extent permitted by law, Geoscience Australia excludes all warranties in respect of the Data.  In respect of any warranties that cannot be excluded by law, Geoscience Australia's liability is limited, at its option, to replacement of the Data, supply of equivalent data or refund of the purchase price.
+
+9.	Release: Except as provided in the previous clause, the Licensee: 
+(a)	releases Geoscience Australia and its employees and agents in respect of all liability for loss, damage or injury which may be suffered by the Licensee arising from its use of the Data; and
+(b)	indemnifies Geoscience Australia and its employees and agents in respect of all liability for loss, damage or injury, which may be suffered by any person arising from that person's use of the Data supplied to the Licensee.
+
+10.	Termination: This agreement will automatically terminate if the Licensee breaches this agreement. Geoscience Australia may also terminate the agreement by giving the Licensee 14 days notice in writing.
+
+After the end of this agreement, the Licensee must immediately cease using the Data and erase all copies under its control. Accrued rights or remedies of either party are not affected by the termination of the agreement.
+
+11.	Application within the Commonwealth: Where the Licensee is an entity that it is not permitted to enter into a binding legal agreement except as the Commonwealth, the agreement will be read down as a mere arrangement.
+
+12.	Waiver: Failure or neglect by either party to enforce at any time any of the provisions of this agreement will not be construed or deemed to a waiver of that party's rights under this licence.
+
+13.	Entire Agreement: This agreement records the entire agreement between the parties and supersedes all earlier agreements and representations by the parties about its subject matter and may only be altered in writing signed by both parties.
+
+14.	Applicable Law: This agreement is governed by the law of the Australian Capital Territory and the parties submit to the jurisdiction of courts of that Territory.
+
+
