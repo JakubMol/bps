@@ -1,7 +1,6 @@
-import pandas as pd
+import Grid as Grid
 
 
-
-def load_housing_data():
-    csv_path = ".//data//fires//fire_nrt_M6_96617.csv"
-    return pd.read_csv(csv_path)
+test_grid = Grid.Grid(50, 50)
+test_grid.initialise()
+print(test_grid.tostring())
