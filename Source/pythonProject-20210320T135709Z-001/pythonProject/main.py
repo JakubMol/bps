@@ -1,7 +1,9 @@
 import Grid as Grid
 
 
-test_grid = Grid.Grid(50, 50)
+test_grid = Grid.Grid(20, 20)
 test_grid.addempty()
-for i in test_grid.getneighbours(49, 49):
-    print(i.tostring())
+test_grid.grids[0][0].state = 1
+test_grid.grids[0][1].state = 1
+test_grid.next()
+print(test_grid.tostring())
