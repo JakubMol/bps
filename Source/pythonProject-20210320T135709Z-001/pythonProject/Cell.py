@@ -6,9 +6,10 @@ class Cell:
         self.speedOfFireSpread = 0
         self.w = 1
         self.totalArea = self.w * self.w
+        self.elevation = 0
 
     def tostring(self):
-        return f"Cell x:{self.x} y:{self.y} state:{self.state} speed of fire spread:{self.speedOfFireSpread}"
+        return f"Cell x:{self.x} y:{self.y} state:{self.state} speed of fire spread:{self.speedOfFireSpread} elevation: {self.elevation}"
 
     @property
     def state(self):

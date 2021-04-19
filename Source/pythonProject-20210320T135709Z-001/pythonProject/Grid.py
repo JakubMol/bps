@@ -1,4 +1,5 @@
 import Cell as Cell
+import Elevation
 import Neighbours as Neighbours
 import copy
 
@@ -24,7 +25,13 @@ class Grid:
         return output
 
     def last(self):
-        return self.grids[len(self.grids) - 1]
+        return self.grids[self.lastindex()]
+
+    def lastindex(self):
+        return len(self.grids) - 1
+
+    def update(self, grid):
+        self.grids[self.lastindex()] = grid
 
     def getcell(self, x, y):
         try:
@@ -48,10 +55,12 @@ class Grid:
         return neighbours
 
     def next(self):
-        grid = []
-        last_grid = self.last()
-        for cell in last_grid:
-            new_cell = Cell.Cell(cell.x, cell.y)
-            new_cell.state = self.getneighbours(cell.x, cell.y).getstate()
-            grid.append(new_cell)
+        grid = copy.deepcopy(self.last())
+        for cell in grid:
+            cell.state = self.getneighbours(cell.x, cell.y).getstate()
         self.grids.append(grid)
+
+    def map(self, area):
+        elevation = Elevation.Elevation(self.x)
+        self.update(elevation.map(area, self.last()))
+
