@@ -1,6 +1,7 @@
 import aseg_gdf2
+import pandas
 import Coordinate
-
+import xarray
 
 def getcoordinates():
     gdf = aseg_gdf2.read(r'data/elevation/out4830223565355185480/ga/National_Gravity_Database_Sept2017',
@@ -16,3 +17,14 @@ def getcoordinates():
         coordinate.elevation = elevation[0][i]
         coordinates.append(coordinate)
     return coordinates
+
+
+def todataframe():
+    return pandas.DataFrame.from_records([_.todict() for _ in getcoordinates()])
+
+def getnetcdf():
+    ds = xarray.open_dataset(r"data/elevation/north/Gravmap2019-grid-dem_geoid.nc")
+    df = ds.to_dataframe()
+
+
+

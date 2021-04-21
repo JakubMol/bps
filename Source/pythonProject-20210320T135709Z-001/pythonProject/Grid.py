@@ -2,6 +2,7 @@ import Cell as Cell
 import Elevation
 import Neighbours as Neighbours
 import copy
+import pandas
 
 class Grid:
     def __init__(self, x, y):
@@ -64,3 +65,7 @@ class Grid:
         elevation = Elevation.Elevation(self.x)
         self.update(elevation.map(area, self.last()))
 
+    def todataframe(self):
+        grid = self.last()
+        pandas.DataFrame.from_records([_.todict() for _ in grid]).to_csv(r"data/temp/elevation.csv")
+        return pandas.DataFrame.from_records([_.todict() for _ in grid])
