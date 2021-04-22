@@ -46,26 +46,48 @@ class Grid:
             for j in range(-1, 2):
                 cell = self.getcell((x + i), (y + j))
                 if cell is not None:
-                    if x == 0 or y == 0:
-                        if x == 0 and y == 0:
+                    if cell.x == x or cell.y == y:
+                        if cell.x == x and cell.y == y:
                             neighbours.central = cell
                         else:
                             neighbours.cardinal.append(cell)
-                    if x != 0 and y != 0:
+                    if cell.x != x and cell.y != y:
                         neighbours.ordinal.append(cell)
         return neighbours
 
     def next(self):
         grid = copy.deepcopy(self.last())
         for cell in grid:
-            cell.state = self.getneighbours(cell.x, cell.y).getstate()
+            state = self.getneighbours(cell.x, cell.y).getstate()
+            if state < 0:
+                cell.state = 0
+            if state > 1:
+                cell.state = 1
+            if 0 < state < 1:
+                cell.state = state
+
         self.grids.append(grid)
 
     def map(self, area):
         elevation = Elevation.Elevation(self.x)
         self.update(elevation.map(area, self.last()))
 
+    def mapopen(self, area):
+        elevation = Elevation.Elevation(self.x)
+        self.update(elevation.mapopen(area, self.last()))
+
     def todataframe(self):
         grid = self.last()
-        pandas.DataFrame.from_records([_.todict() for _ in grid]).to_csv(r"data/temp/elevation.csv")
         return pandas.DataFrame.from_records([_.todict() for _ in grid])
+
+    def todict(self):
+        return [_.todict() for _ in self.last()]
+
+    def tocsv(self):
+        data = []
+        for index, grid in enumerate(self.grids):
+            data.extend([_.tocsv(index) for _ in grid])
+        return data
+
+    def todf(self):
+        return pandas.DataFrame.from_records(self.tocsv())

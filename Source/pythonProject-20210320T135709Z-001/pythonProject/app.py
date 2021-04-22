@@ -13,20 +13,33 @@ import Area
 import time
 import Grid
 import Data
+import main
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 token = open(".mapbox_token").read()
 px.set_mapbox_access_token(token)
-Data.todataframe()
+
 elevation = r"data/temp/elevation.csv"
 fire = r"data/fires/fire_archive_M6_96619.csv"
-fig = px.scatter_mapbox(pd.read_csv(fire), lon="longitude", lat="latitude",
-                        mapbox_style="satellite", width=1600, height=800, animation_frame="acq_date", color="brightness")
+grid = r"data/temp/test_grid.csv"
+
+lock = False
+
+fig = px.scatter_mapbox(pd.read_csv(grid), lon="longitude", lat="latitude",
+                        mapbox_style="satellite", width=1600, height=800, animation_frame="gridid", color="state")
 ALLOWED_TYPES = (
     "text", "range",
 )
+
+button = html.Div([
+    html.Div(dcc.Input(id='input-on-submit', type='number')),
+    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Div(id='container-button-basic',
+             children='Enter a value and press submit')
+])
+
 
 input = html.Div(
     [
@@ -37,6 +50,7 @@ input = html.Div(
         )
         for _ in ALLOWED_TYPES
     ]
+    + [button]
     + [html.Div(id="out-all-types")]
 )
 
@@ -51,7 +65,7 @@ app.layout = html.Div(children=[
         id='example-graph',
         figure=fig
     ),
-    input
+    button
 ])
 
 @app.callback(
@@ -60,6 +74,16 @@ app.layout = html.Div(children=[
 )
 def cb_render(*vals):
     return " | ".join((str(val) for val in vals if val))
+
+@app.callback(
+    dash.dependencies.Output('example-graph', 'figure'),
+    [dash.dependencies.Input('submit-val', 'n_clicks')],
+    [dash.dependencies.State('input-on-submit', 'value')])
+def update_output(n_clicks, value):
+    main.run(value)
+    fig = px.scatter_mapbox(pd.read_csv(grid), lon="longitude", lat="latitude",
+                            mapbox_style="satellite", width=1600, height=800, animation_frame="gridid", color="state")
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
