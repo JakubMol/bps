@@ -8,18 +8,24 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+
 import Area
 import time
 import Grid
 import Data
 import main
+import datetime
+import json
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 token = open(".mapbox_token").read()
 px.set_mapbox_access_token(token)
+
+#app.config['suppress_callback_exceptions'] = True
 
 elevation = r"data/temp/elevation.csv"
 fire = r"data/fires/fire_archive_M6_96619.csv"
@@ -35,7 +41,7 @@ ALLOWED_TYPES = (
 
 button = html.Div([
     html.Div(dcc.Input(id='input-on-submit', type='number')),
-    html.Button('Submit', id='submit-val', n_clicks=0),
+    html.Button('Submit', id='submit-val', n_clicks=0, title="locked"),
     html.Div(id='container-button-basic',
              children='Enter a value and press submit')
 ])
@@ -54,6 +60,10 @@ input = html.Div(
     + [html.Div(id="out-all-types")]
 )
 
+interval = html.Div([dcc.Interval(id='interval', interval=500000, n_intervals=0)])
+
+
+
 app.layout = html.Div(children=[
     html.H1(children='Bushfire propagation simulation'),
 
@@ -65,25 +75,46 @@ app.layout = html.Div(children=[
         id='example-graph',
         figure=fig
     ),
-    button
+    button,
+    interval,
+    html.Div(id="data-out")
 ])
 
-@app.callback(
-    Output("out-all-types", "children"),
-    [Input("input_{}".format(_), "value") for _ in ALLOWED_TYPES],
-)
-def cb_render(*vals):
-    return " | ".join((str(val) for val in vals if val))
+#@app.callback(
+#    Output("out-all-types", "children"),
+#    [Input("input_{}".format(_), "value") for _ in ALLOWED_TYPES],
+#)
+#def cb_render(*vals):
+#    return " | ".join((str(val) for val in vals if val))
 
 @app.callback(
-    dash.dependencies.Output('example-graph', 'figure'),
-    [dash.dependencies.Input('submit-val', 'n_clicks')],
-    [dash.dependencies.State('input-on-submit', 'value')])
-def update_output(n_clicks, value):
-    main.run(value)
+    Output('submit-val', 'title'),
+    [Input('submit-val', 'n_clicks')],
+    [State('input-on-submit', 'value')])
+def update(n_clicks, value):
+        if n_clicks > 0 and value is not None:
+            main.run(value)
+            return "Draw grid"
+        else:
+            raise PreventUpdate
+
+@app.callback(
+    Output('example-graph', 'figure'),
+    [Input('submit-val', 'title')],
+    [Input('interval', 'n_intervals')])
+def draw(title, n_intervals):
     fig = px.scatter_mapbox(pd.read_csv(grid), lon="longitude", lat="latitude",
-                            mapbox_style="satellite", width=1600, height=800, animation_frame="gridid", color="state")
+                            mapbox_style="satellite", width=1600, height=800, animation_frame="gridid",
+                            color="state")
     return fig
+
+@app.callback(
+    Output('data-out', 'children'),
+    [Input('example-graph', 'selectedData')])
+def get(selectedData):
+    data = json.dumps(selectedData)
+    return selectedData
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
