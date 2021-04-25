@@ -4,9 +4,9 @@ import Area
 import Data
 
 
-def run(runs):
-    gridwidth = 40
-    area = Area.new(-22, 131, 1, 1)
+def run(runs, gridwidth, area):
+    #gridwidth = 40
+    #area = Area.new(-22, 131, 1, 1)
     start = time.perf_counter()
     test_grid = Grid.Grid(gridwidth, gridwidth)
     test_grid.addempty()
