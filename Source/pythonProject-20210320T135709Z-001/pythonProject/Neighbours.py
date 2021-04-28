@@ -23,9 +23,9 @@ class Neighbours:
         if self.central is not None:
             state += self.central.state
         if len(self.cardinal) > 0:
-            state += sum(map(lambda _: _.state * (((self.central.elevation - _.elevation) / self.sum())), self.cardinal))
+            state += sum(map(lambda _: _.state * (((self.central.elevation - _.elevation) / self.sum() if self.sum() > 0 else 1)), self.cardinal))
         if len(self.ordinal) > 0:
-            state += sum(map(lambda _: 0.83 * _.state * (((self.central.elevation - _.elevation) / self.sum())), self.ordinal))
+            state += sum(map(lambda _: 0.83 * _.state * (((self.central.elevation - _.elevation) / self.sum() if self.sum() > 0 else 1)), self.ordinal))
         return state
 
 

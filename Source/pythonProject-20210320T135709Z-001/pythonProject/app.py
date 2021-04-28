@@ -12,13 +12,7 @@ import plotly.express as px
 import pandas as pd
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-
-import Area
-import time
-import Grid
-import Data
 import main
-import datetime
 import json
 import Area
 
@@ -78,6 +72,12 @@ button = html.Div([
     dcc.Loading(
         id="loading-3",
         children=html.Div(id="loading-output-3")),
+    html.Hr(),
+    daq.ToggleSwitch(
+        id='switch',
+        label='Show selected',
+        labelPosition='top',
+        value=False)
 ], style={'display': 'inline-block', 'vertical-align': 'top', 'margin-top': '2.5%'})
 
 
@@ -100,11 +100,8 @@ interval = html.Div([dcc.Interval(id='interval', interval=500000, n_intervals=0)
 
 
 app.layout = html.Div(children=[
-    html.H1(children='Bushfire propagation simulation'),
+    html.H1(children='Bushfire propagation modelling'),
 
-    html.Div(children='''
-        Dash: A web application framework for Python.
-    '''),
     html.Div(children=[
         dcc.Graph(
             id='example-graph',
@@ -136,8 +133,9 @@ app.layout = html.Div(children=[
     [State('input-gridsize', 'value')])
 def update(n_clicks, lon, lat, lon_delta, lat_delta, runs, gridsize):
         if n_clicks > 0 and gridsize is not None:
+            path = r"data/temp/update_values.csv"
             area = Area.new(lon, lat, lon_delta, lat_delta)
-            main.run(runs, gridsize, area)
+            main.run(runs, gridsize, area, pd.read_csv(path))
             return "Draw grid", {'is_loading': True}
         else:
             raise PreventUpdate
@@ -176,13 +174,15 @@ def setgrid(data):
     if data is not None and data != "null":
         selected_data = json.loads(data)
         if len(selected_data['points']) == 0 and len(selected_data['range']['mapbox']) == 2:
-            lon = selected_data['range']['mapbox'][0][0]
-            lat = selected_data['range']['mapbox'][0][1]
-            lon_delta = abs(lon - selected_data['range']['mapbox'][1][0])
-            lat_delta = abs(lat - selected_data['range']['mapbox'][1][1])
+            lon = selected_data['range']['mapbox'][0][1]
+            lat = selected_data['range']['mapbox'][0][0]
+            lon_delta = abs(lon - selected_data['range']['mapbox'][1][1])
+            lat_delta = abs(lat - selected_data['range']['mapbox'][1][0])
             return lon, lat, lon_delta, lat_delta
         else:
             raise PreventUpdate
+    else:
+        raise PreventUpdate
 
 @app.callback(
     [Output('count', 'children')],
@@ -221,7 +221,7 @@ def updatevalues(n_clicks, data, data_click, state, rateOfFire):
             if data is not None and data != 'null':
                 data_points = json.loads(data)['points']
             if data_points is not None and click_point is not None:
-                data_points.update(click_point)
+                data_points.extend(click_point)
             if data_points is None and click_point is not None:
                 data_points = click_point
             if state is None:
@@ -231,7 +231,7 @@ def updatevalues(n_clicks, data, data_click, state, rateOfFire):
             if state != 0 or rateOfFire != 0:
                 records = []
                 for point in data_points:
-                    records.append({'longitude': point['lon'], 'latitude': point['lat'], 'state': state, 'speedOfFireSpread': rateOfFire})
+                    records.append({'longitude': point['lat'], 'latitude': point['lon'], 'state': state, 'speedOfFireSpread': rateOfFire, 'markerId': point['pointIndex']})
                 df = pandas.DataFrame(records)
                 df.to_csv(r"data/temp/update_values.csv", mode='a', header=False)
 
@@ -242,9 +242,21 @@ def reset(n_clicks):
     if n_clicks > 0:
         path = r"data/temp/update_values.csv"
         f = open(path, "w")
-        f.write(",longitude,latitude,state,speedOfFireSpread\n")
+        f.write(",longitude,latitude,state,speedOfFireSpread,markerId\n")
         f.close()
 
+@app.callback(
+    Output('data-out', 'style'),
+    Output('data-click', 'style'),
+    Input('switch', 'value'))
+def switch(value):
+    if value is not None:
+        disabled = {'display': 'none'}
+        visable = {'display': 'inline'}
+        if value:
+            return visable, visable
+        else:
+            return disabled, disabled
 
 if __name__ == '__main__':
     app.run_server(debug=True)
